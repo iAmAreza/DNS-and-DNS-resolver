@@ -20,7 +20,7 @@ If the IP address is **not found** in either cache, the system follows the **DNS
 
 This process ensures that **domain names are translated into IP addresses**, allowing users to access websites without remembering numerical addresses.
 
-![Dns1.svg](/home/reza/Desktop/DNS/Dns1.svg)
+![Dns1.svg](Dns1.svg)
 
 ### Dns Resolution
 
@@ -105,7 +105,7 @@ When a user requests a website (e.g., www.example.com), the **Recursive DNS Reso
 - The **Recursive DNS Resolver caches the result** for future queries.
 - The **IP address is sent to the browser**, which then loads the website.
 
-![dns2.svg](/home/reza/Desktop/DNS/dns2.svg)
+![dns2.svg](dns2.svg)
 
 ### Public DNS Resolver
 
