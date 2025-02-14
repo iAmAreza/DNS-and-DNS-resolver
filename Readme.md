@@ -210,5 +210,4 @@ DNS records store **specific information about a domain**. Different record type
 | **CNAME Record** | Creates an **alias** for another domain. | `www.example.com → example.com` |
 | **TXT Record** | Stores **text-based data**, often for verification. | `"v=spf1 include:_spf.google.com ~all"` |
 
-This updated README ensures proper image display and uses Bash script formatting for code sections.
 
