@@ -121,3 +121,73 @@ When a user requests a website (e.g., www.example.com), the **Recursive DNS Reso
 | **Speed & Reliability** | Can be **slow**, sometimes **censored** | Usually **faster**, more **reliable**, and optimized |  |
 | **Security & Privacy** | ISP may **log and track queries** | Google/Cloudflare claim to provide **better privacy** |  |
 | **Customization** | **Auto-configured** by ISP | Users can **manually configure** their preferred DNS |  |
+
+## FastAPI Implementation for DNS Resolver
+
+### 1. **Using Python's `socket` Module (Basic Approach)**
+
+```bash
+uvicorn filename:app --reload
+```
+
+**Test in a browser:**
+
+```bash
+http://127.0.0.1:8000/resolve/google.com
+```
+
+**Example Response:**
+
+```json
+{
+  "domain": "google.com",
+  "ip_addresses": ["142.250.190.78"]
+}
+```
+
+### 2. **Using `dnspython` for Advanced DNS Resolution**
+
+```bash
+pip install dnspython fastapi uvicorn
+```
+
+**Example Implementation:**
+
+```python
+from fastapi import FastAPI
+import dns.resolver
+
+app = FastAPI()
+
+@app.get("/resolve/{domain}")
+def resolve_domain(domain: str):
+    try:
+        result = dns.resolver.resolve(domain, "A")
+        ip_addresses = [ip.to_text() for ip in result]
+        return {"domain": domain, "ip_addresses": ip_addresses}
+    except dns.resolver.NoAnswer:
+        return {"error": "No DNS record found."}
+    except dns.resolver.NXDOMAIN:
+        return {"error": "Domain does not exist."}
+```
+
+**Run the FastAPI server:**
+
+```bash
+uvicorn main:app --reload
+```
+
+### DNS Record Types
+
+DNS records store **specific information about a domain**. Different record types serve different purposes.
+
+| **Record Type** | **Purpose** | **Example Output** |
+|---------------|------------|------------------|
+| **A Record** | Maps a domain to an **IPv4** address. | `google.com → 142.250.190.78` |
+| **AAAA Record** | Maps a domain to an **IPv6** address. | `google.com → 2607:f8b0:4005:808::200e` |
+| **MX Record** | Specifies **mail servers** for handling emails. | `gmail.com → alt1.gmail-smtp-in.l.google.com` |
+| **CNAME Record** | Creates an **alias** for another domain. | `www.example.com → example.com` |
+| **TXT Record** | Stores **text-based data**, often for verification. | `"v=spf1 include:_spf.google.com ~all"` |
+
+This updated README ensures proper image display and uses Bash script formatting for code sections.
+
